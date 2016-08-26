@@ -50,6 +50,8 @@ class Message(object):
                     delete_image(filename)
                 except IOError:
                     self.response = "I could not find any such " + MAGIC_WORD
+        elif text:
+            self.response = "Do you have any friends you can share?"
 
         # Uncomment for manual mode
         # if text:
