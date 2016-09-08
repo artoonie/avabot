@@ -1,7 +1,9 @@
+import errno
 import md5
 import os
 import pysftp
 import requests
+import socket
 import shutil
 import time
 import uuid
@@ -214,6 +216,13 @@ if __name__ == "__main__":
                 if not slack_client.rtm_connect():
                     print "Failed. Dying."
                     raise
+            except socket.error as serr:
+                if serr.errno == errno.ETIMEDOUT:
+                    print "Operation timed out. Sleeping for a minute..."
+                    time.sleep(60)
+                else:
+                    print "Unknown socket error"
+                    raise serr
             if message:
                 handle_command(message)
             time.sleep(READ_WEBSOCKET_DELAY)
