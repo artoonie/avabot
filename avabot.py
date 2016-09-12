@@ -195,7 +195,7 @@ def parse_slack_output(slack_rtm_output):
         for output in output_list:
             if output['type'] == 'message' and 'text' in output:
                 text = output['text']
-                if text.startswith(AT_BOT):
+                if AT_BOT in text:
                     return Message(type='text',
                                    channel=output['channel'],
                                    text=text.split(AT_BOT)[1].strip().lower())
